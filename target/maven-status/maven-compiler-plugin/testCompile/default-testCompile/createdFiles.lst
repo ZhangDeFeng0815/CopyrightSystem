@@ -1,0 +1,8 @@
+com\test\TestEjb.class
+com\test\TestSequenceUtils.class
+com\WebContextTestExecutionListener.class
+acws\core\TestBaseData.class
+com\test\CreateTable.class
+com\test\fileSystem\BaseTest.class
+acws\core\TestAsSpring.class
+com\test\TestTmp.class

@@ -12,7 +12,7 @@ https://192.168.10.168/read
 zhangdefeng
 has-props
 has-prop-mods
-
+svn:special svn:externals svn:needs-lock
 
 
 
@@ -158,7 +158,7 @@ file
 wangdefeng
 
 
-svn:special svn:externals svn:needs-lock
+
 
 
 
