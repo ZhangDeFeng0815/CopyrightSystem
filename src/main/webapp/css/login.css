@@ -1,0 +1,6 @@
+.headerContainer{
+	background-image:url(../images/dddl_header.png);
+}
+.bgBoxContainer{
+    background: #fff url(../images/dddl_bg.png) no-repeat center top;
+}

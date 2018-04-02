@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 版权状态变更日志表 -->
+<mapper namespace="framework.system.dao.impl.mysql.AcwsMenuResMysqlDaoImpl">
+	<select id="searchMenuResList" parameterType="Map" resultType="map">
+		SELECT
+			ID
+			, MENU_ID
+			, RES_ID
+			, IS_ENTER
+			, MEMO
+			, SEQNO
+		FROM
+			WFO_MENU_RES 
+		WHERE 1=1
+			<if test="RES_ID != null">
+				AND `RES_ID` = #{RES_ID}
+			</if>
+			<if test="MENU_ID != null">
+				AND `MENU_ID` = #{MENU_ID}
+			</if>
+	</select>
+	
+	<select id="getMenuResDetailList" parameterType="Map" resultType="map">
+		SELECT
+			mr.ID
+			, mr.MENU_ID
+			, mr.RES_ID
+			, mr.IS_ENTER
+			, mr.MEMO
+			, mr.SEQNO
+			, m.MENU_NAME
+			, m.STATUS
+			, m.PARENT_MENU_ID
+			, r.RES_NAME
+			, r.MEMO AS RES_MEMO
+			, r.PATH
+		FROM
+			WFO_MENU_RES mr
+		INNER JOIN WFO_MENU m ON m.MENU_ID = mr.MENU_ID
+		INNER JOIN WFO_RESOURCE r ON r.RES_ID = mr.RES_ID
+		WHERE 1=1
+			<if test="RES_ID != null">
+				AND mr.`RES_ID` = #{RES_ID}
+			</if>
+			<if test="MENU_ID != null">
+				AND mr.`MENU_ID` = #{MENU_ID}
+			</if>
+		ORDER BY mr.SEQNO
+	</select>
+	
+	<select id="getCurMaxSeqNo" parameterType="map" resultType="map">
+		SELECT 
+		  MAX(t.`SEQNO`) AS SEQNO 
+		FROM WFO_MENU_RES t
+		WHERE 
+			t.MENU_ID = #{MENU_ID}
+	</select>
+	
+	<delete id="deleteJunkData" parameterType="Map">
+		DELETE 
+		FROM
+		  WFO_MENU_RES 
+		WHERE NOT EXISTS 
+		  (SELECT 
+		    1 
+		  FROM
+		    `WFO_MENU` t
+		  WHERE t.`MENU_ID` = WFO_MENU_RES.`MENU_ID`)
+	</delete>
+</mapper>

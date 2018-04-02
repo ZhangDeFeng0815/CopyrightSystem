@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/read/!svn/ver/92406/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract
+END
+contractInAdd.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/read/!svn/ver/92960/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract/contractInAdd.jsp
+END
+contractOutList.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/read/!svn/ver/92986/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract/contractOutList.jsp
+END
+contractInView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/read/!svn/ver/92960/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract/contractInView.jsp
+END
+contractInEdit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/read/!svn/ver/92960/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract/contractInEdit.jsp
+END
+contractOutView.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/read/!svn/ver/92981/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract/contractOutView.jsp
+END
+contractInList.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/read/!svn/ver/92986/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract/contractInList.jsp
+END
+contractOutAdd.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/read/!svn/ver/92968/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract/contractOutAdd.jsp
+END
+contractOutEdit.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/read/!svn/ver/92968/CopyrightSystem/CopyrightSystem/trunk/src/main/webapp/contract/contractOutEdit.jsp
+END

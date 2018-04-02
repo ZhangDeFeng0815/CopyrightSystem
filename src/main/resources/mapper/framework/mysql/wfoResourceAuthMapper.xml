@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 版权状态变更日志表 -->
+<mapper namespace="framework.system.dao.impl.mysql.AcwsResourceAuthMysqlDaoImpl">
+
+	<select id="getResAuthList" parameterType="Map" resultType="map">
+		SELECT
+			r.AUTH_ID
+			, r.RES_ID
+			, r.AUTH_NAME
+			, r.MEMO
+			, r.TYPE
+			, r.SEQNO
+			, r.STATUS
+			, r.GROUP_TYPE
+			, r.GROUP_NUM
+		FROM
+			WFO_RESOURCE_AUTH r
+		WHERE 1=1
+			<if test="RES_ID != null and RES_ID != '' or RES_ID == 0">
+				AND r.`RES_ID` = #{RES_ID}
+			</if>
+			<if test="AUTH_NAME != null and AUTH_NAME != ''">
+				AND r.`AUTH_NAME` = #{AUTH_NAME}
+			</if>
+			<if test="TYPE != null and TYPE != '' or TYPE == 0">
+				AND r.`TYPE` = #{TYPE}
+			</if>
+			<if test="STATUS != null and STATUS != '' or STATUS == 0">
+				AND r.`STATUS` = #{STATUS}
+			</if>
+			<if test="GROUP_TYPE != null">
+				AND r.`GROUP_TYPE` = #{GROUP_TYPE}
+			</if>
+			<if test="GROUP_NUM != null">
+				AND r.`GROUP_NUM` = #{GROUP_NUM}
+			</if>
+		ORDER BY r.SEQNO
+	</select>
+	
+	<select id="getCurMaxSeqNo" parameterType="map" resultType="map">
+		SELECT 
+		  MAX(t.`SEQNO`) AS SEQNO 
+		FROM WFO_RESOURCE_AUTH t
+		WHERE 
+			t.RES_ID = #{RES_ID}
+		AND t.TYPE = #{TYPE}
+	</select>
+	
+	<delete id="deleteJunkData" parameterType="Map">
+		DELETE 
+		FROM
+		  WFO_RESOURCE_AUTH 
+		WHERE NOT EXISTS 
+		  (SELECT 
+		    1 
+		  FROM
+		    `WFO_RESOURCE` r 
+		  WHERE r.`RES_ID` = WFO_RESOURCE_AUTH.`RES_ID`)
+	</delete>
+</mapper>

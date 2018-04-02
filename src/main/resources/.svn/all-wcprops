@@ -1,0 +1,25 @@
+END
+acws.mv.db
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/read/!svn/ver/92017/CopyrightSystem/CopyrightSystem/trunk/src/main/resources/acws.mv.db
+END
+spring-mvc.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/read/!svn/ver/92116/CopyrightSystem/CopyrightSystem/trunk/src/main/resources/spring-mvc.xml
+END
+spring-scf.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/read/!svn/ver/92707/CopyrightSystem/CopyrightSystem/trunk/src/main/resources/spring-scf.xml
+END
+config.properties
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/read/!svn/ver/92891/CopyrightSystem/CopyrightSystem/trunk/src/main/resources/config.properties
+END

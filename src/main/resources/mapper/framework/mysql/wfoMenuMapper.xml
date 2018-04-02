@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 版权状态变更日志表 -->
+<mapper namespace="framework.system.dao.impl.mysql.AcwsMenuMysqlDaoImpl">
+	<select id="searchMenuList" parameterType="map" resultType="map">
+		SELECT
+			MENU_ID
+			, PARENT_MENU_ID
+			, MENU_NAME
+			, ICON1
+			, MEMO
+			, STATUS
+			, SEQNO
+		FROM
+			WFO_MENU 
+		WHERE 1=1
+			<if test="PARENT_MENU_ID != null">
+				AND `PARENT_MENU_ID` = #{PARENT_MENU_ID}
+			</if>
+			<if test="STATUS != null">
+				AND `STATUS` = #{STATUS}
+			</if>
+		ORDER BY SEQNO
+	</select>
+	
+	<select id="selectMenuListById" parameterType="map" resultType="map">
+		SELECT 
+		  MENU_ID
+		FROM
+		  (SELECT 
+		    * 
+		  FROM
+		    `wfo_menu` t 
+		  WHERE 1 = 1 
+		  <if test="MENU_ID != null and MENU_ID != '' or MENU_ID == 0">
+		    AND (
+		      t.`PARENT_MENU_ID` = #{MENU_ID}  
+		      OR t.MENU_ID = #{MENU_ID} 
+		    ) 
+		  UNION
+		  ALL 
+		  SELECT 
+		    * 
+		  FROM
+		    wfo_menu t 
+		  WHERE EXISTS 
+		    (SELECT 
+		      1 
+		    FROM
+		      wfo_menu ti 
+		    WHERE ti.`PARENT_MENU_ID` = #{MENU_ID} 
+		      AND ti.`MENU_ID` = t.`PARENT_MENU_ID`)
+		  </if>
+		  ) AS t
+	</select>
+	
+	<select id="getCurMaxSeqNo" parameterType="map" resultType="map">
+		SELECT 
+		  MAX(t.`SEQNO`) AS SEQNO
+		FROM
+		  `wfo_menu` t 
+		WHERE 1=1
+		<if test="PARENT_MENU_ID != null">
+			AND (t.`PARENT_MENU_ID` = #{PARENT_MENU_ID} OR t.MENU_ID = #{PARENT_MENU_ID})
+		</if>
+	</select>
+	
+	<update id="incSeqNoByCurSeqNo" parameterType="map">
+		UPDATE wfo_menu 
+		   SET SEQNO=SEQNO + 1
+		 WHERE SEQNO >= #{SEQ_NO}
+		 AND MENU_ID != #{EXCLUDE_ID}
+	</update>
+</mapper>

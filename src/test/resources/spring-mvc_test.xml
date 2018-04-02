@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc  
+	    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    	http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/data/jpa 
+		http://www.springframework.org/schema/data/jpa/spring-jpa-4.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">	
+	<context:property-placeholder location="classpath:config.properties" />
+	<!-- 扫描控制器类 -->
+	<context:component-scan base-package="com.basic,com.content,com.core,com.log,com.quartz,com.tyyd,com.util,com.workflow"  use-default-filters="false"> 
+	    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" /> 
+	</context:component-scan>
+	<bean id="multipartResolver"
+		class="com.tyyd.framework.myupload.AcwsMultipartResolver">
+		<property name="defaultEncoding">
+			<value>GBK</value><!-- 不能是UTF-8、否则进度条无法显示 -->
+		</property>
+		<property name="maxUploadSize">
+			<value>10737418240</value><!-- 10G -->
+		</property>
+		<property name="maxInMemorySize"><!-- 全部存临时文件 -->
+			<value>0</value>
+		</property>
+	</bean>
+	
+</beans>
+	
+	

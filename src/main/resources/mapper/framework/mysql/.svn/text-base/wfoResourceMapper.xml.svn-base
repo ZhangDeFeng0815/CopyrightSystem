@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 版权状态变更日志表 -->
+<mapper namespace="framework.system.dao.impl.mysql.AcwsResourceMysqlDaoImpl">
+	<select id="searchResList" parameterType="Map" resultType="map">
+		SELECT
+			r.RES_ID
+			, r.RES_NAME
+			, r.MEMO
+			, r.MEMO_SETTINGS
+			, r.TYPE
+			, r.IS_DEV
+			, r.PATH
+		FROM
+			WFO_RESOURCE r
+		WHERE 1=1
+			<if test="RES_ID != null and RES_ID != '' or RES_ID == 0">
+				AND r.`RES_ID` = #{RES_ID}
+			</if>
+			<if test="RES_NAME != null and RES_NAME != ''">
+				AND r.`RES_NAME` like CONCAT('%',#{RES_NAME},'%')
+			</if>
+			<if test="RES_NAME_EQUAL != null and RES_NAME_EQUAL != ''">
+				AND r.`RES_NAME` = #{RES_NAME_EQUAL}
+			</if>
+			<if test='IFREL != null and IFREL == "1"'>
+				AND NOT EXISTS (SELECT 1 FROM WFO_MENU_RES mr WHERE mr.RES_ID = r.RES_ID)
+			</if>
+			<if test='menuIdList != null'>
+				AND EXISTS (SELECT 1 FROM WFO_MENU_RES mr WHERE mr.RES_ID = r.RES_ID AND mr.MENU_ID IN
+					<foreach collection="menuIdList" item="menuId"  open="(" separator="," close=")">   
+						#{menuId}
+					</foreach>
+					)
+			</if>
+	</select>
+	
+</mapper>

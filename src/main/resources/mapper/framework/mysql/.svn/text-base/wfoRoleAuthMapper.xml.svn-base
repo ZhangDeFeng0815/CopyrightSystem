@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 版权状态变更日志表 -->
+<mapper namespace="framework.system.dao.impl.mysql.AcwsRoleAuthMySqlDaoImpl">
+	<select id="hasAuth" parameterType="Map" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			WFO_ROLE_AUTH
+		WHERE `AUTH_ID` = #{AUTH_ID}
+		  AND ROLE_ID IN
+		<foreach collection="ROLE_LIST" item="ROLE_ID"  open="(" separator="," close=")">
+			#{ROLE_ID}
+		</foreach>
+	</select>
+
+	<select id="getRoleAuthList" parameterType="Map" resultType="map">
+		SELECT
+			ID
+			, ROLE_ID
+			, AUTH_ID
+		FROM
+			WFO_ROLE_AUTH
+		WHERE 1=1
+			<if test="ROLE_ID != null and ROLE_ID != '' or ROLE_ID == 0">
+				AND `ROLE_ID` = #{ROLE_ID}
+			</if>
+			<if test="AUTH_ID != null and AUTH_ID != '' or AUTH_ID == 0">
+				AND `AUTH_ID` = #{AUTH_ID}
+			</if>
+	</select>
+	
+	<delete id="deleteRoleAuthByAuthId" parameterType="Map">
+		DELETE FROM 
+			WFO_ROLE_AUTH
+		WHERE
+			AUTH_ID = #{AUTH_ID}
+	</delete>
+	
+	<delete id="deleteRoleAuthByMenuIdResId" parameterType="Map">
+		DELETE rAuth FROM 
+			WFO_ROLE_AUTH AS rAuth
+		INNER JOIN WFO_RESOURCE_AUTH resAu ON resAu.AUTH_ID = rAuth.AUTH_ID
+		WHERE
+			resAu.RES_ID = #{RES_ID}
+	</delete>
+	
+	<delete id="deleteRoleAuthByRoleId" parameterType="Map">
+		DELETE FROM 
+			WFO_ROLE_AUTH
+		WHERE
+			ROLE_ID = #{ROLE_ID}
+	</delete>
+	
+	<delete id="deleteRoleAuthByParams" parameterType="Map">
+		DELETE FROM 
+			WFO_ROLE_AUTH
+		WHERE 1=1
+			<if test="ROLE_ID != null and ROLE_ID != '' or ROLE_ID == 0">
+				AND `ROLE_ID` = #{ROLE_ID}
+			</if>
+			<if test="AUTH_ID != null and AUTH_ID != '' or AUTH_ID == 0">
+				AND `AUTH_ID` = #{AUTH_ID}
+			</if>
+	</delete>
+	
+	<delete id="deleteJunkData" parameterType="Map">
+		DELETE 
+		FROM
+		  WFO_ROLE_AUTH 
+		WHERE 
+			NOT EXISTS
+			  (SELECT 
+			    1 
+			  FROM
+			    `WFO_ROLE` r 
+			  WHERE r.`ROLE_ID` = WFO_ROLE_AUTH.`ROLE_ID`)
+		OR
+		  NOT EXISTS
+			  (SELECT 
+			    1 
+			  FROM
+			    `WFO_RESOURCE_AUTH` t 
+			  WHERE t.`AUTH_ID` = WFO_ROLE_AUTH.`AUTH_ID`)
+	</delete>
+	
+</mapper>

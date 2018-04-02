@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 版权状态变更日志表 -->
+<mapper namespace="framework.system.dao.impl.mysql.AcwsRoleUserMysqlDaoImpl">
+	<sql id="sql_Fields">
+		SELECT 
+			ru.ID
+			, ru.ROLE_ID
+			, ru.USER_ID
+			, ru.CREATE_DATE
+			, ru.UPDATE_DATE
+			, ru.CREATE_USERID
+			, ru.UPDATE_USERID
+	</sql>
+	
+	<sql id="sql_ListFROMCommon">
+		FROM WFO_ROLE_USER ru
+		WHERE 1=1
+	</sql>
+	
+	<sql id="sql_ListWhereCommon">
+		<if test="ROLE_ID != null and ROLE_ID != '' or ROLE_ID == 0">
+			AND ru.ROLE_ID = #{ROLE_ID}
+		</if>
+		<if test="USER_ID != null and USER_ID != '' or USER_ID == 0">
+			AND ru.USER_ID = #{USER_ID}
+		</if>
+	</sql>
+	
+	<select id="getRoleListByUserId" parameterType="Map" resultType="java.lang.Long">
+		SELECT
+			ROLE_ID
+		FROM
+			WFO_ROLE_USER A
+		WHERE
+			A.USER_ID = #{USER_ID}
+	</select>
+	<select id="getMenuListByRoleIds" parameterType="map" resultType="map">
+		SELECT DISTINCT
+			C.MENU_ID,
+			C.RES_ID
+		FROM
+			WFO_ROLE_MENU_RES C,
+			WFO_MENU E,
+			WFO_MENU_RES F
+		WHERE 1 = 1
+		  AND C.ROLE_ID IN
+		<foreach collection="ROLE_LIST" item="ROLE_ID"  open="(" separator="," close=")">
+			#{ROLE_ID}
+		</foreach>
+		AND E.MENU_ID = C.MENU_ID
+		AND E.`STATUS` = 1
+		AND F.MENU_ID = C.MENU_ID
+		AND F.RES_ID = C.RES_ID
+		ORDER BY
+			E.SEQNO,
+			F.SEQNO
+	</select>
+	<select id="getMyResourceByMenuId" parameterType="Map" resultType="Map">
+		SELECT
+			B.RES_ID,
+			E.PATH
+		FROM
+			WFO_ROLE_USER A,
+			WFO_ROLE_MENU_RES B,
+			WFO_MENU_RES C,
+			WFO_ROLE D,
+			WFO_RESOURCE E
+		WHERE
+			A.USER_ID = #{USER_ID}
+		AND B.ROLE_ID = A.ROLE_ID
+		AND B.MENU_ID = #{MENU_ID}
+		AND C.MENU_ID = B.MENU_ID
+		AND D.ROLE_ID = A.ROLE_ID
+		AND D.`STATUS` = 1
+		AND E.RES_ID = B.RES_ID
+		ORDER BY
+			C.SEQNO
+		LIMIT 1
+	</select>
+	
+	<select id="hasAuthByResId" parameterType="Map" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			WFO_ROLE_AUTH B,
+		  	WFO_RESOURCE_AUTH C,
+  			WFO_ROLE E
+		WHERE 1 = 1
+		  AND B.ROLE_ID IN
+		<foreach collection="ROLE_LIST" item="ROLE_ID"  open="(" separator="," close=")">
+			#{ROLE_ID}
+		</foreach>
+		AND B.ROLE_ID = A.ROLE_ID
+		AND C.RES_ID = #{RES_ID}
+		AND C.AUTH_ID = B.AUTH_ID
+		AND E.ROLE_ID = A.ROLE_ID
+		AND E.`STATUS`= 1	
+	</select>
+	
+	<select id="hasAuthByAuthId" parameterType="Map" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			WFO_ROLE_AUTH B,
+		  	WFO_RESOURCE_AUTH C
+		WHERE 1 = 1
+		  AND B.ROLE_ID IN
+		<foreach collection="ROLE_LIST" item="ROLE_ID"  open="(" separator="," close=")">
+			#{ROLE_ID}
+		</foreach>
+		AND B.AUTH_ID = #{AUTH_ID}
+		AND C.AUTH_ID = B.AUTH_ID
+		AND C.`STATUS`= 1
+	</select>
+	
+	<select id="getAuthIdsByResId" parameterType="Map" resultType="java.lang.Long">
+		SELECT
+			B.AUTH_ID
+		FROM
+			WFO_ROLE_AUTH B,
+			WFO_RESOURCE_AUTH C
+		WHERE 1 = 1
+		  AND B.ROLE_ID IN
+		<foreach collection="ROLE_LIST" item="ROLE_ID"  open="(" separator="," close=")">
+			#{ROLE_ID}
+		</foreach>
+		AND C.RES_ID = #{RES_ID}
+		AND C.AUTH_ID = B.AUTH_ID
+		AND C.`STATUS` = 1
+	</select>
+	<select id="getRoleUserList" parameterType="Map"
+		resultType="Map">
+		<include refid="sql_Fields"/>
+		<include refid="sql_ListFROMCommon"/>
+		<include refid="sql_ListWhereCommon"/>
+		
+		<if test="userIdList != null">
+			AND ru.USER_ID IN 
+				<foreach collection="userIdList" item="userId"  open="(" separator="," close=")">   
+					#{userId}    
+				</foreach>
+		</if>
+		ORDER BY ru.UPDATE_DATE desc
+	</select>
+	
+	<select id="getRoleUserListCount" parameterType="Map"
+		resultType="int">
+		SELECT COUNT(*)
+		<include refid="sql_ListFROMCommon"/>
+		<include refid="sql_ListWhereCommon"/>
+		<if test="userIdList != null">
+			AND ru.USER_ID IN 
+				<foreach collection="userIdList" item="userId"  open="(" separator="," close=")">   
+					#{userId}    
+				</foreach>
+		</if>
+	</select>
+
+	<delete id="deleteRoleUserByRoleId" parameterType="Map">
+		DELETE FROM 
+			WFO_ROLE_USER
+		WHERE
+			ROLE_ID = #{ROLE_ID}
+	</delete>
+	
+	<delete id="batchDeleteUserRole" parameterType="Map">
+		DELETE FROM 
+			WFO_ROLE_USER
+		WHERE
+			ROLE_ID = #{ROLE_ID}
+		AND USER_ID IN
+		<foreach collection="userList" item="userId"  open="(" separator="," close=")">   
+			#{userId}    
+		</foreach>
+	</delete>
+	
+	<delete id="deleteJunkData" parameterType="Map">
+		DELETE 
+		FROM
+		  WFO_ROLE_USER 
+		WHERE NOT EXISTS 
+		  (SELECT 
+		    1 
+		  FROM
+		    `WFO_ROLE` t
+		  WHERE t.`ROLE_ID` = WFO_ROLE_USER.`ROLE_ID`)
+	</delete>
+</mapper>

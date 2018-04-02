@@ -1,0 +1,21 @@
+#main{background:url("../images/welcome.png") no-repeat center center;}
+#header{background-image:url(../acwsui/img/logo4.png);}
+.icon-menu-home{
+	background:url('../images/32/home.png') no-repeat center center;}
+.icon-menu-logout{
+	background:url('../images/32/exit32.png') no-repeat center center;}
+.icon-menu-value{
+	background:url('../images/64/value.png') no-repeat center center;}
+
+.icon-menu-32{
+	background:url('../images/32/logo_ty.png') no-repeat center center;}
+.icon-partner{
+	background:url('../images/64/partner.png') no-repeat center center;}	
+.icon-menu-cr32{
+	background:url('../images/32/cr32.png') no-repeat center center;}	
+.icon-menu-author32{
+	background:url('../images/32/author32.png') no-repeat center center;}	
+.icon-menu-settings32{
+	background:url('../acwsui/img/setup.png') no-repeat center center;}
+.icon-menu-me32{
+	background:url('../images/32/me32.png') no-repeat center center;}

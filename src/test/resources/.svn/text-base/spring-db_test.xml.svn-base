@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/data/jpa 
+		http://www.springframework.org/schema/data/jpa/spring-jpa-4.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 多数据源适配 -->
+	<bean id="dsMySqlTest"  
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://172.23.0.178:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"></property>
+		<property name="username" value="tyyd_api"></property>
+		<property name="password" value="tyyd_123456"></property>
+	</bean>
+	<bean id="dsMySqlLocal"  
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	<bean id="dsMySqlCopyright"  
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://172.23.2.200:3306/nrps?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"></property>
+		<property name="username" value="rnd"></property>
+		<property name="password" value="P1WD#xyoP"></property>
+	</bean>
+ 	<!-- H2数据源：文件数据库 -->
+  	<bean id="dsH2"  
+  		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver" />
+        <property name="url" value="jdbc:h2:file:C:/acws" />
+        <property name="username" value="sa" />
+        <property name="password" value="123" />
+    </bean>
+    <bean id="dsMySql"  
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://172.23.0.40:3306/nrps?autoReconnect=true&amp;failOverReadOnly=false&amp;maxReconnects=10&amp;characterEncoding=utf-8"></property>
+		<property name="username" value="nrps"></property>
+		<property name="password" value="nrps"></property>
+	</bean>
+	<bean id="acwsDataSource" class="com.tyyd.framework.core.jdbc.datasource.MultiDataSource">  
+	    <property name="targetDataSources">  
+	        <map key-type="java.lang.String">  
+	        	<!-- 多数据源支持：此处还可以添加更多的数据源 -->
+	            <entry value-ref="dsH2" key="dsH2"></entry>
+	            <entry value-ref="dsMySql" key="dsMySql"></entry>  
+	            <entry value-ref="dsMySqlTest" key="dsMySqlTest"></entry>  
+	            <entry value-ref="dsMySqlLocal" key="dsMySqlLocal"></entry>  
+	            <entry value-ref="dsMySqlCopyright" key="dsMySqlCopyright"></entry>  
+	        </map>  
+	    </property>
+	    <!-- 默认使用"dsAcwsH2"的数据源 -->
+	    <property name="defaultDataSourceId" value="dsMySql"></property>     
+	</bean>	
+</beans>

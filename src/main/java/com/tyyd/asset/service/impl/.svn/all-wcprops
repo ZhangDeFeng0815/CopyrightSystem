@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/read/!svn/ver/92304/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/asset/service/impl
+END
+AssetImportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/read/!svn/ver/93011/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/asset/service/impl/AssetImportServiceImpl.java
+END
+AssetRightLibExportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/read/!svn/ver/92162/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/asset/service/impl/AssetRightLibExportServiceImpl.java
+END
+AssetRightDImportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/read/!svn/ver/92615/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/asset/service/impl/AssetRightDImportServiceImpl.java
+END
+AssetServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/read/!svn/ver/92830/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/asset/service/impl/AssetServiceImpl.java
+END
+AssetExportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/read/!svn/ver/92148/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/asset/service/impl/AssetExportServiceImpl.java
+END

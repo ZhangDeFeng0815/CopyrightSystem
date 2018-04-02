@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 版权状态变更日志表 -->
+<mapper namespace="framework.system.dao.impl.mysql.AcwsRoleMenuResMysqlDaoImpl">
+	<delete id="deleteRoleMenuResByParams" parameterType="Map">
+		DELETE FROM 
+			WFO_ROLE_MENU_RES
+		WHERE 1=1
+			<if test="MENU_ID != null and MENU_ID != '' or MENU_ID == 0">
+				AND MENU_ID = #{MENU_ID}
+			</if>
+			<if test="ROLE_ID != null and ROLE_ID != '' or ROLE_ID == 0">
+				AND ROLE_ID = #{ROLE_ID}
+			</if>
+			<if test="RES_ID != null and RES_ID != '' or RES_ID == 0">
+				AND RES_ID = #{RES_ID}
+			</if>
+	</delete>
+	
+	<delete id="deleteJunkData" parameterType="Map">
+		DELETE 
+		FROM
+		  WFO_ROLE_MENU_RES 
+		WHERE 
+			NOT EXISTS
+			  (SELECT 
+			    1 
+			  FROM
+			    `WFO_ROLE` R 
+			  WHERE R.`ROLE_ID` = WFO_ROLE_MENU_RES.`ROLE_ID`)
+		OR
+		  NOT EXISTS
+			  (SELECT 
+			    1 
+			  FROM
+			    `WFO_MENU` M 
+			  WHERE M.`MENU_ID` = WFO_ROLE_MENU_RES.`MENU_ID`)
+		OR
+		  NOT EXISTS
+			  (SELECT 
+			    1 
+			  FROM
+			    `WFO_RESOURCE` T 
+			  WHERE T.`RES_ID` = WFO_ROLE_MENU_RES.`RES_ID`)
+	</delete>
+	
+	<select id="getRoleMenuResList" parameterType="Map" resultType="map">
+		SELECT
+			r.ID
+			, r.ROLE_ID
+			, r.MENU_ID
+			, r.RES_ID
+		FROM
+			WFO_ROLE_MENU_RES r
+		WHERE 1=1
+			<if test="ROLE_ID != null and ROLE_ID != '' or ROLE_ID == 0">
+				AND r.`ROLE_ID` = #{ROLE_ID}
+			</if>
+			<if test="MENU_ID != null and MENU_ID != '' or MENU_ID == 0">
+				AND r.`MENU_ID` = #{MENU_ID}
+			</if>
+		ORDER BY r.CREATE_DATE
+	</select>
+</mapper>

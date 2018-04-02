@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/read/!svn/ver/92829/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/value/service/impl
+END
+AssetValueExportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/read/!svn/ver/92829/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/value/service/impl/AssetValueExportServiceImpl.java
+END
+AssetPayExportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/read/!svn/ver/92748/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/value/service/impl/AssetPayExportServiceImpl.java
+END
+AssetPayImportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/read/!svn/ver/92961/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/value/service/impl/AssetPayImportServiceImpl.java
+END
+AssetIncomeExportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/read/!svn/ver/92795/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/value/service/impl/AssetIncomeExportServiceImpl.java
+END
+AssetIncomeImportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/read/!svn/ver/92961/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/value/service/impl/AssetIncomeImportServiceImpl.java
+END
+ValueServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/read/!svn/ver/92815/CopyrightSystem/CopyrightSystem/trunk/src/main/java/com/tyyd/value/service/impl/ValueServiceImpl.java
+END

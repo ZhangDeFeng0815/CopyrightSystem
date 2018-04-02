@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc  
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-4.0.xsd
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/data/jpa 
+        http://www.springframework.org/schema/data/jpa/spring-jpa-4.0.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">  
+    <!-- 启动SpringMVC的注解功能，它会自动注册HandlerMapping、HandlerAdapter、ExceptionResolver的相关实例 -->
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="com.tyyd.framework.core.ajax.AjaxParamResolver"/>
+        </mvc:argument-resolvers>
+        <mvc:message-converters>  
+            <!--字符串AcwsObjectMapper不作转换、其他类型都转换-->
+            <ref bean="mappingJacksonHttpMessageConverter" />
+            <!--只转换字符串-->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!-- 静态文件默认handler -->
+    <mvc:default-servlet-handler />
+
+    <!-- Activates annotation-based bean configuration-->
+    <context:annotation-config /> 
+    
+    <bean id="SpringMVCContext" class="com.tyyd.framework.core.util.MVCContextHelper"></bean>
+    
+    <!-- Scans for application @Components to deploy -->
+    <!-- 扫描控制器类 -->
+    <context:component-scan base-package="com.tyyd"  use-default-filters="true"> 
+    <!--
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" /> -->
+    </context:component-scan>
+    
+    <import resource="classpath:spring-mvc_test.xml" />
+    
+    <!--字符串AcwsObjectMapper不作转换、其他类型都转换-->
+    <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+        <property name="objectMapper">  
+           <bean class="com.tyyd.framework.core.AcwsObjectMapper"></bean>  
+        </property>  
+    </bean>
+
+    <!-- 配置视图解析 -->
+    <bean id="jspViewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <!-- 子线程Controller注解事务 -->
+    <tx:annotation-driven transaction-manager="acwsTransactionManager" proxy-target-class="true"/>
+    <!-- 切面事务 -->
+    <tx:advice id="txadvice" transaction-manager="acwsTransactionManager">
+        <tx:attributes>
+            <tx:method name="*" isolation="READ_COMMITTED" propagation="REQUIRED" rollback-for="java.lang.Exception" /> 
+        </tx:attributes>
+    </tx:advice>
+    
+    <aop:config expose-proxy="true">
+        <aop:pointcut id="pointcut" expression="execution(* com.tyyd..*Controller.*(..))"/>
+        <aop:advisor advice-ref="txadvice" pointcut-ref="pointcut"/>
+    </aop:config>
+    
+</beans>
+    
+    

@@ -1,0 +1,216 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.tyyd</groupId>
+  <artifactId>CopyrightSystem</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>文字版权管理系统</name>
+  <description>文字版权管理系统WEB工程</description>
+	<repositories>
+		<repository>
+			<id>snapshots</id>
+			<url>http://61.130.247.181:6081/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>yutian</id>
+			<url>http://61.130.247.181:6081/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<properties>
+		<springframework-version>4.0.7.RELEASE</springframework-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<!-- 框架级 JAR 开始 -->
+		<dependency>
+		  <groupId>com.tyyd</groupId>
+		  <artifactId>acws.all</artifactId>
+		  <version>2.0.0-SNAPSHOT</version>
+		  <type>pom</type>
+		  <!--
+			<exclusions>
+			  <exclusion>
+				 <groupId>log4j</groupId>
+				 <artifactId>log4j</artifactId>
+			  </exclusion>
+			  <exclusion>
+				 <groupId>org.slf4j</groupId>
+				 <artifactId>slf4j-log4j12</artifactId>
+			  </exclusion>
+			  <exclusion>
+				  <groupId>org.slf4j</groupId>
+				  <artifactId>log4j-over-slf4j</artifactId>
+			  </exclusion>
+			</exclusions>
+			-->
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>servlet-api</artifactId>
+		    <version>6.0.53</version>
+		    <scope>provided</scope>
+		</dependency>
+		<dependency>
+		    <groupId>commons-lang</groupId>
+		    <artifactId>commons-lang</artifactId>
+		    <version>2.6</version>
+		</dependency>
+		<dependency>
+		  <groupId>com.tyyd</groupId>
+		  <artifactId>crps.scf</artifactId>
+		  <version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<!-- 添加oracle jdbc driver -->		
+		<!-- 框架级 JAR 结束 -->
+		<!-- 项目级 JAR 开始 -->
+		<dependency>
+			<groupId>org.httpunit</groupId>
+			<artifactId>httpunit</artifactId>
+			<version>1.7.2</version>
+			<exclusions>
+			  	<exclusion>
+			  	  <groupId>javax.servlet</groupId>  
+			      <artifactId>servlet-api</artifactId>
+			  	</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ejbModule</groupId>
+			<artifactId>ReadPlatform_Common</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>ejbModule</groupId>
+			<artifactId>UserInterface</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<!-- 登录日志输出用 开始-->
+		<dependency>
+			<groupId>com.yutian</groupId>
+			<artifactId>CodeConstants</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>ejbModule</groupId>
+		  <artifactId>operationInterface</artifactId>
+		  <version>10.3.2</version>
+		</dependency>
+		<!-- 登录日志输出用 结束-->
+		<dependency>
+		  <groupId>org.jboss.client</groupId>
+		  <artifactId>jbossall-client</artifactId>
+		  <version>4.2.3.GA</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>eclipse</groupId>
+			<artifactId>link</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<dependency>
+           <groupId>com.yutian.scf</groupId>
+           <artifactId>scf</artifactId>
+           <version>2.1-SNAPSHOT</version>
+			<exclusions>
+			  <exclusion>
+				 <groupId>log4j</groupId>
+				 <artifactId>log4j</artifactId>
+			  </exclusion>
+		        <exclusion>
+		          <groupId>org.slf4j</groupId>
+		          <artifactId>slf4j-log4j12</artifactId>
+		        </exclusion>
+	      	</exclusions>
+        </dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+		    <version>4.0.7.RELEASE</version>
+		</dependency>
+		<!-- 项目级 JAR 结束 -->
+
+		<!-- 项目级本地 JAR 结束 -->
+		<!--项目级本地 JAR 结束 -->
+		<dependency>
+			<groupId>com.tyyd.platform.common</groupId>
+			<artifactId>dynamic-datasource</artifactId>
+			<version>1.6-SNAPSHOT</version>
+			<exclusions>
+			  <exclusion>
+				 <groupId>log4j</groupId>
+				 <artifactId>log4j</artifactId>
+			  </exclusion>
+		        <exclusion>
+		          <groupId>org.slf4j</groupId>
+		          <artifactId>slf4j-log4j12</artifactId>
+		        </exclusion>
+	      	</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>CopyrightSystem</finalName>
+	    <resources>  
+        <resource>  
+            <directory>resource</directory>  
+        </resource>  
+        </resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<sourceIncludes>
+						<sourceInclude>*</sourceInclude>
+					</sourceIncludes>
+					<useProjectReferences>false</useProjectReferences>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+				<version>3.1</version>
+				<warSourceDirectory> ${basedir}/src/main/webapp</warSourceDirectory>
+				</configuration>
+				
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding> 
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+		<defaultGoal>compile</defaultGoal>
+	</build>
+</project>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:scf="http://www.myscf.com/schema/scf"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.myscf.com/schema/scf 
+		http://www.myscf.com/schema/scf/scf.xsd">
+
+	<!-- 服务调用支持2种方式的调用，建议使用第一种 -->
+	<!-- 第一种调用方式 -->
+	<!-- 参数解析 interface:需要调用的scf服务的接口名字 group:调用的scf服务所属分组 target：主要是在单元测试是用于指定调用提供服务的地址和端口，在生产环境中屏蔽该参数 
+		version：调用服务的版本 -->
+	
+<!-- 	<scf:consumer id="scfTestService" -->
+<!-- 		interface="com.test.scf.content.service.ScfTestService"  -->
+<!-- 		version="editorial-1.0" -->
+<!-- 		target="10.1.10.62:12200?_TIMEOUT=10000" -->
+<!-- 		group="editorial" />	 -->
+	
+	<scf:consumer id="scfDemoService" 
+	    interface="com.tyyd.scf.demo.service.ScfDemoService" 
+	    target="127.0.0.1:12200?_TIMEOUT=10000"
+	    version="crps-1.0" 
+	    group="crps"/>
+</beans>

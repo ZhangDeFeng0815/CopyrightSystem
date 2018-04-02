@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/data/jpa 
+		http://www.springframework.org/schema/data/jpa/spring-jpa-4.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- Scans for application @Components to deploy -->
+
+	<!-- 多数据源适配 -->
+	<!-- MySql数据源 -->
+	<bean id="dataSourceManager" class="com.tyyd.platform.common.datasource.DruidDataSourceManager" init-method="initConfig" destroy-method="shutdown">
+		<property name="dsCfgGroup" value="crs"/>   <!-- 同下图 dataId -->
+		<property name="dsCfgDataId" value="ds_crs"/>    <!-- 同下图 group-->
+	</bean>
+	<bean id="dsMysql" factory-bean="dataSourceManager" factory-method="createDataSource" init-method="init" destroy-method="close">
+		<constructor-arg type="java.lang.String" value="tyyd_mysql"/>  <!-- 同下图 内容里面的  dsName-->
+	</bean>
+
+	<!-- Oracle数据源 -->
+	<bean id="acwsDataSource" class="com.tyyd.framework.core.jdbc.datasource.MultiDataSource">  
+	    <property name="targetDataSources">  
+	        <map key-type="java.lang.String">  
+	        	<!-- 多数据源支持：此处还可以添加更多的数据源 -->
+	            <entry value-ref="dsAcwsH2" key="dsAcwsH2"></entry>
+	            <!-- acws框架个性化配置 -->
+	            <entry value-ref="dsMysql" key="dsMysql"></entry>
+	        </map>  
+	    </property>
+	    <!-- 默认使用"dsAcwsH2"的数据源 -->
+	    <property name="defaultDataSourceId" value="dsMysql"></property>     
+	</bean>	
+</beans>

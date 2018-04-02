@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 版权状态变更日志表 -->
+<mapper namespace="framework.system.dao.impl.mysql.AcwsRoleMysqlDaoImpl">
+	<select id="getRoleInfo" parameterType="Map" resultType="map">
+		SELECT
+			ROLE_ID
+			, ROLE_NAME
+			, MEMO
+			, TYPE
+			, STATUS
+			, SEQNO
+		FROM
+			WFO_ROLE 
+		WHERE 1=1
+			<if test="ROLE_ID != null and ROLE_ID != '' or ROLE_ID == 0">
+				AND `ROLE_ID` = #{ROLE_ID}
+			</if>
+			<if test="ROLE_NAME != null and ROLE_NAME != ''">
+				AND `ROLE_NAME` LIKE CONCAT('%',#{ROLE_NAME},'%')
+			</if>
+	</select>
+
+	<select id="getRoleList" parameterType="Map" resultType="map">
+		SELECT
+			r.ROLE_ID
+			, r.ROLE_NAME
+			, r.MEMO
+			, r.SEQNO
+			, r.TYPE
+			, r.STATUS
+		FROM
+			WFO_ROLE r
+		WHERE 1=1
+			<if test="ROLE_ID != null and ROLE_ID != '' or ROLE_ID == 0">
+				AND r.`ROLE_ID` = #{ROLE_ID}
+			</if>
+			<if test="TYPE != null and TYPE != '' or TYPE == 0">
+				AND r.`TYPE` = #{TYPE}
+			</if>
+		ORDER BY r.SEQNO
+	</select>
+	
+	<select id="getCurMaxSeqNo" parameterType="map" resultType="map">
+		SELECT 
+		  MAX(t.`SEQNO`) AS SEQNO 
+		FROM WFO_ROLE t
+	</select>
+</mapper>
